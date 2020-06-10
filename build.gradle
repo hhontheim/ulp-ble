@@ -19,6 +19,9 @@ plugins {
 group 'net.hontheim'
 version '1.0-SNAPSHOT'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 mainClassName = 'net.hontheim.ulp.ble.Main'
 
 defaultTasks 'clean', 'assemble', 'installDist', 'dependencies', 'run'
@@ -52,8 +55,8 @@ subprojects {
 
     group = 'net.hontheim.ulp'
     version = '1.0-SNAPSHOT'
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     compileJava.options.encoding = 'UTF-8'
 }
