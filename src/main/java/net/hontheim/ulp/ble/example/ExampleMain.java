@@ -36,14 +36,14 @@ public class ExampleMain implements Runnable {
                 System.out.println("Device connected");
             }
         };
-        app = new BleApplication("/tango", appListener);
-        service = new BleService("/tango/s", "13333333-3333-3333-3333-333333333001", true);
+        app = new BleApplication("/ulp", appListener);
+        service = new BleService("/ulp/s", "13333333-3333-3333-3333-333333333001", true);
         List<CharacteristicFlag> flags = new ArrayList<CharacteristicFlag>();
         flags.add(CharacteristicFlag.READ);
         flags.add(CharacteristicFlag.WRITE);
         flags.add(CharacteristicFlag.NOTIFY);
 
-        characteristic = new BleCharacteristic("/tango/s/c", service, flags, "13333333-3333-3333-3333-333333333002", new BleCharacteristicListener() {
+        characteristic = new BleCharacteristic("/ulp/s/c", service, flags, "13333333-3333-3333-3333-333333333002", new BleCharacteristicListener() {
             @Override
             public void setValue(byte[] value) {
                 try {
