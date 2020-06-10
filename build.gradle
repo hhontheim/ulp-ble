@@ -22,7 +22,7 @@ version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-mainClassName = 'net.hontheim.ulp.ble.Main'
+mainClassName = 'net.hontheim.ulp.ble.ULPDevice'
 
 defaultTasks 'clean', 'assemble', 'installDist', 'dependencies', 'run'
 
