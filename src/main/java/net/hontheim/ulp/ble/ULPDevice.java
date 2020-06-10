@@ -9,19 +9,16 @@ import net.hontheim.ulp.ble.services.InfoService;
 import net.hontheim.ulp.ble.services.ULPService;
 import org.freedesktop.dbus.exceptions.DBusException;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ULPDevice implements Runnable {
     BleApplication app;
 
     ULPService ulpService;
-    //InfoService infoService;
+    InfoService infoService;
 
     ULPUserId ulpUserId;
     ULPUserLED ulpUserLED;
     ULPUserName ulpUserName;
-    //InfoSerial infoSerial;
+    InfoSerial infoSerial;
 
     public ULPDevice() throws DBusException, InterruptedException {
         BleApplicationListener appListener = new BleApplicationListener() {
@@ -39,23 +36,23 @@ public class ULPDevice implements Runnable {
         app = new BleApplication("/ulp", appListener);
 
         ulpService = new ULPService();
-        //infoService = new InfoService();
+        infoService = new InfoService();
 
         ulpUserId = new ULPUserId(ulpService);
         ulpUserLED = new ULPUserLED(ulpService);
         ulpUserName = new ULPUserName(ulpService);
 
-        //infoSerial = new InfoSerial(infoService);
+        infoSerial = new InfoSerial(infoService);
 
 
         ulpService.addCharacteristic(ulpUserId);
         ulpService.addCharacteristic(ulpUserLED);
         ulpService.addCharacteristic(ulpUserName);
 
-        //infoService.addCharacteristic(infoSerial);
+        infoService.addCharacteristic(infoSerial);
 
         app.addService(ulpService);
-        //app.addService(infoService);
+        app.addService(infoService);
 
         app.start();
     }
