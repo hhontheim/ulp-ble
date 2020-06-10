@@ -1,0 +1,3 @@
+[submodule "ble-java"]
+	path = ble-java
+	url = git@github.com:tongo/ble-java.git
