@@ -1,21 +1,27 @@
 package net.hontheim.ulp.ble;
 
 import it.tangodev.ble.*;
+import net.hontheim.ulp.ble.characteristics.InfoSerial;
+import net.hontheim.ulp.ble.characteristics.ULPUserId;
+import net.hontheim.ulp.ble.characteristics.ULPUserLED;
+import net.hontheim.ulp.ble.characteristics.ULPUserName;
+import net.hontheim.ulp.ble.services.InfoService;
+import net.hontheim.ulp.ble.services.ULPService;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ULPDevice implements Runnable {
-    protected String valueString = "Ciao ciao";
     BleApplication app;
-    BleService service;
-    BleCharacteristic characteristic;
 
-    public void notifyBle(String value) {
-        this.valueString = value;
-        characteristic.sendNotification();
-    }
+    ULPService ulpService;
+    InfoService infoService;
+
+    ULPUserId ulpUserId;
+    ULPUserLED ulpUserLED;
+    ULPUserName ulpUserName;
+    InfoSerial infoSerial;
 
     public ULPDevice() throws DBusException, InterruptedException {
         BleApplicationListener appListener = new BleApplicationListener() {
@@ -29,35 +35,27 @@ public class ULPDevice implements Runnable {
                 System.out.println("Device connected");
             }
         };
+
         app = new BleApplication("/ulp", appListener);
-        service = new BleService("/ulp/s", "F278E33F-D8F1-4F4B-8E04-885A5968FA11", true);
-        List<BleCharacteristic.CharacteristicFlag> flags = new ArrayList<BleCharacteristic.CharacteristicFlag>();
-//        flags.add(CharacteristicFlag.READ);
+
+        ulpService = new ULPService();
+        infoService = new InfoService();
+
+        List<BleCharacteristic.CharacteristicFlag> flags = new ArrayList<>();
         flags.add(BleCharacteristic.CharacteristicFlag.WRITE);
-//        flags.add(CharacteristicFlag.NOTIFY);
 
-        characteristic = new BleCharacteristic("/ulp/s/c", service, flags, "4FB34DCC-27AB-4D22-AB77-9E3B03489CFC", new BleCharacteristicListener() {
-            @Override
-            public void setValue(byte[] value) {
-                try {
-                    valueString = new String(value, "UTF8");
-                    System.out.println("New Value received for name: " + valueString);
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        ulpUserId = new ULPUserId(ulpService);
+        ulpUserLED = new ULPUserLED(ulpService);
+        ulpUserName = new ULPUserName(ulpService);
+        infoSerial = new InfoSerial(infoService);
 
-            @Override
-            public byte[] getValue() {
-                try {
-                    return valueString.getBytes("UTF8");
-                } catch(Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        service.addCharacteristic(characteristic);
-        app.addService(service);
+        ulpService.addCharacteristic(ulpUserId);
+        ulpService.addCharacteristic(ulpUserLED);
+        ulpService.addCharacteristic(ulpUserName);
+        infoService.addCharacteristic(infoSerial);
+
+        app.addService(ulpService);
+        app.addService(infoService);
 
         app.start();
     }
