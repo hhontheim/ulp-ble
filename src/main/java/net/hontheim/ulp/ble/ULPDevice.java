@@ -1,7 +1,6 @@
 package net.hontheim.ulp.ble;
 
 import it.tangodev.ble.*;
-import net.hontheim.ulp.ble.example.ExampleCharacteristic;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 import java.util.ArrayList;
@@ -60,8 +59,6 @@ public class ULPDevice implements Runnable {
         service.addCharacteristic(characteristic);
         app.addService(service);
 
-        ExampleCharacteristic exampleCharacteristic = new ExampleCharacteristic(service);
-        service.addCharacteristic(exampleCharacteristic);
         app.start();
     }
 
@@ -79,17 +76,8 @@ public class ULPDevice implements Runnable {
     }
 
     public static void main(String[] args) throws DBusException, InterruptedException {
-        ULPDevice example = new ULPDevice();
-        Thread t = new Thread(example);
+        ULPDevice ulpDevice = new ULPDevice();
+        Thread t = new Thread(ulpDevice);
         t.start();
-//		Thread.sleep(15000);
-        // example.notifyBle("woooooo");
-//		Thread.sleep(15000);
-//		t.notify();
-
-//		Thread.sleep(5000);
-//		System.out.println("stopping application");
-        // example.getApp().stop();
-        System.out.println("Application stopped");
     }
 }
