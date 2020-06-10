@@ -5,6 +5,7 @@ import it.tangodev.ble.BleCharacteristicListener;
 import it.tangodev.ble.BleService;
 import org.bluez.GattCharacteristic1;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,16 @@ public class ULPUserLED extends BleCharacteristic implements GattCharacteristic1
         this.listener = new BleCharacteristicListener() {
             @Override
             public void setValue(byte[] value) {
-                System.out.println("New value for LED: " + value);
+                String newValue = null;
+                try {
+                    newValue = new String(value, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                if (newValue!= null) {
+                    System.out.println("New value for LED: " + newValue);
+                }
             }
 
             @Override

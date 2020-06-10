@@ -5,6 +5,7 @@ import it.tangodev.ble.BleCharacteristicListener;
 import it.tangodev.ble.BleService;
 import org.bluez.GattCharacteristic1;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +23,16 @@ public class InfoSerial extends BleCharacteristic implements GattCharacteristic1
         this.listener = new BleCharacteristicListener() {
             @Override
             public void setValue(byte[] value) {
-                throw new RuntimeException("Writing not wanted!");
+                String newValue = null;
+                try {
+                    newValue = new String(value, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                if (newValue!= null) {
+                    System.out.println("New value for Serial: " + newValue);
+                }
             }
 
             @Override
