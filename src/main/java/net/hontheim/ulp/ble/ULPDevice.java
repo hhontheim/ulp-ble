@@ -47,11 +47,14 @@ public class ULPDevice implements Runnable {
         ulpUserId = new ULPUserId(ulpService);
         ulpUserLED = new ULPUserLED(ulpService);
         ulpUserName = new ULPUserName(ulpService);
+
         infoSerial = new InfoSerial(infoService);
+
 
         ulpService.addCharacteristic(ulpUserId);
         ulpService.addCharacteristic(ulpUserLED);
         ulpService.addCharacteristic(ulpUserName);
+
         infoService.addCharacteristic(infoSerial);
 
         app.addService(ulpService);
@@ -62,11 +65,6 @@ public class ULPDevice implements Runnable {
 
     @Override
     public void run() {
-        try {
-            this.wait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public BleApplication getApp() {
