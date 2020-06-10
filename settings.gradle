@@ -1,2 +1,3 @@
 rootProject.name = 'ulp-ble'
 
+include ':ble-java', ':ble-java'
