@@ -2,7 +2,6 @@ package net.hontheim.ulp.ble;
 
 import it.tangodev.ble.*;
 import net.hontheim.ulp.ble.example.ExampleCharacteristic;
-import net.hontheim.ulp.ble.example.ExampleMain;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 import java.util.ArrayList;
@@ -80,7 +79,7 @@ public class ULPDevice implements Runnable {
     }
 
     public static void main(String[] args) throws DBusException, InterruptedException {
-        ExampleMain example = new ExampleMain();
+        ULPDevice example = new ULPDevice();
         Thread t = new Thread(example);
         t.start();
 //		Thread.sleep(15000);
