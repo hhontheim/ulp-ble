@@ -9,7 +9,6 @@ buildscript {
     }
 }
 
-
 plugins {
     id 'java'
     id 'application'
@@ -20,13 +19,13 @@ version '1.0-SNAPSHOT'
 
 mainClassName = 'net.hontheim.ulp.ble.Main'
 
+defaultTasks 'clean', 'assemble', 'installDist', 'dependencies', 'run'
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation name: 'unix'
-    implementation name: 'libmatthew-java-0.8'
     implementation name: 'dbus-java-2.7'
     compile project(':ble-java')
     testCompile group: 'junit', name: 'junit', version: '4.12'
