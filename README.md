@@ -5,5 +5,5 @@ Hiermit kann ein Raspberry Pi als BLE-Gerät verwendet werden, an dem sich ein N
 ## Installation
 
 1. Klonen Sie das Repository rekursiv mit `git clone --recurse-submodules <URL>` direkt auf dem Raspberry Pi.
-1. Aktivieren Sie in der Datei `/lib/systemd/system/bluetooth.service` des RPi mit `bluetoohd --experimental` die benötigten erweiterten Funktionen.
+1. Aktivieren Sie in der Datei `/lib/systemd/system/bluetooth.service` des RPi mit `bluetoohd --experimental` die benötigten erweiterten Funktionen und starten Sie den RPi neu.
 1. Starten Sie im Project-Root mit `sudo ./gradlew` den Build-Prozess, der anschließend die Anwendung startet.
