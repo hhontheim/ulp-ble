@@ -2,6 +2,7 @@ package net.hontheim.ulp.ble;
 
 import it.tangodev.ble.*;
 import net.hontheim.ulp.ble.example.ExampleCharacteristic;
+import net.hontheim.ulp.ble.example.ExampleMain;
 import org.freedesktop.dbus.exceptions.DBusException;
 
 import java.util.ArrayList;
@@ -31,19 +32,20 @@ public class ULPDevice implements Runnable {
             }
         };
         app = new BleApplication("/ulp", appListener);
-        service = new BleService("/ulp/s", "13333333-3333-3333-3333-333333333001", true);
+        service = new BleService("/ulp/s", "F278E33F-D8F1-4F4B-8E04-885A5968FA11", true);
         List<BleCharacteristic.CharacteristicFlag> flags = new ArrayList<BleCharacteristic.CharacteristicFlag>();
-        flags.add(BleCharacteristic.CharacteristicFlag.READ);
+//        flags.add(CharacteristicFlag.READ);
         flags.add(BleCharacteristic.CharacteristicFlag.WRITE);
-        flags.add(BleCharacteristic.CharacteristicFlag.NOTIFY);
+//        flags.add(CharacteristicFlag.NOTIFY);
 
-        characteristic = new BleCharacteristic("/ulp/s/c", service, flags, "13333333-3333-3333-3333-333333333002", new BleCharacteristicListener() {
+        characteristic = new BleCharacteristic("/ulp/s/c", service, flags, "4FB34DCC-27AB-4D22-AB77-9E3B03489CFC", new BleCharacteristicListener() {
             @Override
             public void setValue(byte[] value) {
                 try {
                     valueString = new String(value, "UTF8");
+                    System.out.println("New Value received for name: " + valueString);
                 } catch(Exception e) {
-                    System.out.println("");
+                    e.printStackTrace();
                 }
             }
 
@@ -78,18 +80,17 @@ public class ULPDevice implements Runnable {
     }
 
     public static void main(String[] args) throws DBusException, InterruptedException {
-        ULPDevice example = new ULPDevice();
-        System.out.println("");
-		Thread t = new Thread(example);
-		t.start();
+        ExampleMain example = new ExampleMain();
+        Thread t = new Thread(example);
+        t.start();
 //		Thread.sleep(15000);
-//        example.notifyBle("woooooo");
+        // example.notifyBle("woooooo");
 //		Thread.sleep(15000);
 //		t.notify();
-//
+
 //		Thread.sleep(5000);
 //		System.out.println("stopping application");
-//        example.getApp().stop();
-//        System.out.println("Application stopped");
+        // example.getApp().stop();
+        System.out.println("Application stopped");
     }
 }
