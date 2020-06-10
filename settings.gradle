@@ -1,4 +1,5 @@
 rootProject.name = 'ulp-ble'
 
 include(':ble-java')
-project(':ble-java').projectDir = new File(rootProject.projectDir, './ble-java')
+project(':ble-java').projectDir = file('ble-java')
+
